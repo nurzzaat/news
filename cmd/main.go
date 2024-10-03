@@ -14,7 +14,7 @@ import (
 //	@version		1.0
 //	@description	This is a sample server celler server.
 
-//	@host		185.100.67.103
+//	@host		webfinalapi.mobydev.kz
 //	@BasePath	/
 
 // @securityDefinitions.apikey	ApiKeyAuth

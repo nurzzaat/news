@@ -69,7 +69,7 @@ definitions:
       name:
         type: string
     type: object
-host: 185.100.67.103
+host: webfinalapi.mobydev.kz
 info:
   contact: {}
   description: This is a sample server celler server.

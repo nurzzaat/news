@@ -22,7 +22,7 @@ create table
         thumbnail text default '',
         views integer default 0,
         created_at text default '',
-        author_id references users (id) on delete cascade on update cascade
+        author_id integer references users (id) on delete cascade on update cascade
     );
 
     alter table users 

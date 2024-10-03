@@ -6,7 +6,7 @@
         "contact": {},
         "version": "1.0"
     },
-    "host": "185.100.67.103",
+    "host": "webfinalapi.mobydev.kz",
     "basePath": "/",
     "paths": {
         "/categories": {
