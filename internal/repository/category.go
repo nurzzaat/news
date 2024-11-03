@@ -16,24 +16,24 @@ func NewCategoryRepository(db *pgxpool.Pool) models.CategoryRepository {
 	return &CategoryRepository{db: db}
 }
 
-func (r *CategoryRepository) Create(c context.Context, category models.CategoryRequest) (int, error) {
+func (r *CategoryRepository) Create(c context.Context, category models.CategoryRequest, userID uint) (int, error) {
 	var id int
 	currentTime := time.Now().Format("2006-01-02 15:04:05")
-	query := `INSERT INTO category (name, created_at) VALUES ($1, $2) RETURNING id;`
-	if err := r.db.QueryRow(c, query, category.Name, currentTime).Scan(&id); err != nil {
+	query := `INSERT INTO category (name, created_at, author_id) VALUES ($1, $2, $3) RETURNING id;`
+	if err := r.db.QueryRow(c, query, category.Name, currentTime, userID).Scan(&id); err != nil {
 		return id, err
 	}
 	return id, nil
 }
 func (r *CategoryRepository) Edit(c context.Context, category models.CategoryRequest) error {
-	query := `UPDATE category SET name = $1 WHERE id = $2;`
+	query := `UPDATE category SET name = $1 WHERE id = $2  and author_id != $2;`
 	if _, err := r.db.Exec(c, query, category.Name, category.ID); err != nil {
 		return err
 	}
 	return nil
 }
 func (r *CategoryRepository) Delete(c context.Context, categoryID int) error {
-	query := `DELETE FROM category WHERE id = $1;`
+	query := `DELETE FROM category WHERE id = $1 and author_id != $2;`
 	if _, err := r.db.Exec(c, query, categoryID); err != nil {
 		return err
 	}

@@ -25,15 +25,6 @@ func (nc *NewsController) Update(c *gin.Context) {
 	newsRequest.Content = c.PostForm("content")
 	newsRequest.CategoryID, _ = strconv.Atoi(c.PostForm("categoryId"))
 
-	roleID := c.GetUint("roleID")
-
-	if roleID != models.ADMIN {
-		c.JSON(http.StatusBadRequest, models.ErrorResponse{
-			Result: "У вас нет прав для выполнения этой операции",
-		})
-		return
-	}
-
 	var tempFilePath string
 	file, err := c.FormFile("thumbnail")
 	if err != nil {

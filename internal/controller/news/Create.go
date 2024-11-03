@@ -24,15 +24,7 @@ type NewsController struct {
 //	@Failure	default	{object}	models.ErrorResponse
 //	@Router		/news [post]
 func (nc *NewsController) Create(c *gin.Context) {
-	roleID := c.GetUint("roleID")
 	userID := c.GetUint("userID")
-
-	if roleID != models.ADMIN {
-		c.JSON(http.StatusBadRequest, models.ErrorResponse{
-			Result: "У вас нет прав для выполнения этой операции",
-		})
-		return
-	}
 
 	newsRequest := models.NewsRequest{}
 	newsRequest.Title = c.PostForm("title")

@@ -17,14 +17,6 @@ import (
 // @Router		/category/{id} [put]
 func (nc *CategoryController) Update(c *gin.Context) {
 	categoryID, _ := strconv.Atoi(c.Param("id"))
-	roleID := c.GetUint("roleID")
-
-	if roleID != models.ADMIN {
-		c.JSON(http.StatusBadRequest, models.ErrorResponse{
-			Result: "У вас нет прав для выполнения этой операции",
-		})
-		return
-	}
 
 	categoryRequest := models.CategoryRequest{}
 	if err := c.ShouldBind(&categoryRequest); err != nil {

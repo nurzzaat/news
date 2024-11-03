@@ -12,6 +12,10 @@ type NewsRepository struct {
 	db *pgxpool.Pool
 }
 
+const (
+	adminID = 2
+)
+
 func NewNewsRepository(db *pgxpool.Pool) models.NewsRepository {
 	return &NewsRepository{db: db}
 }
@@ -27,15 +31,15 @@ func (r *NewsRepository) Create(c context.Context, news models.NewsRequest, user
 	return id, nil
 }
 func (r *NewsRepository) Edit(c context.Context, news models.NewsRequest) error {
-	query := `UPDATE news SET title = $1, content = $2, category_id = $3, thumbnail = $4 WHERE id = $5; `
-	if _, err := r.db.Exec(c, query, news.Title, news.Content, news.CategoryID, news.ThumbNail, news.ID); err != nil {
+	query := `UPDATE news SET title = $1, content = $2, category_id = $3, thumbnail = $4 WHERE id = $5 and author_id != $6;`
+	if _, err := r.db.Exec(c, query, news.Title, news.Content, news.CategoryID, news.ThumbNail, news.ID, adminID); err != nil {
 		return err
 	}
 	return nil
 }
 func (r *NewsRepository) Delete(c context.Context, newsID int) error {
-	query := `DELETE FROM news WHERE id = $1;`
-	if _, err := r.db.Exec(c, query, newsID); err != nil {
+	query := `DELETE FROM news WHERE id = $1 and author_id != $2;`
+	if _, err := r.db.Exec(c, query, newsID, adminID); err != nil {
 		return err
 	}
 	return nil
@@ -80,4 +84,12 @@ func (r *NewsRepository) GetByID(c context.Context, newsID int) (models.NewsResp
 	}
 
 	return new, nil
+}
+
+func ClearNews(c context.Context, db *pgxpool.Pool) error {
+	query := `DELETE FROM news WHERE author_id != $1;`
+	if _, err := db.Exec(c, query, adminID); err != nil {
+		return err
+	}
+	return nil
 }

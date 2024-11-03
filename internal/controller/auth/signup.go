@@ -126,7 +126,7 @@ func GenerateRandomPassword(size int) string {
 
 func validatePassword(password string) error {
 	if len(password) < 6 {
-		return fmt.Errorf("password must be at least 8 characters long")
+		return fmt.Errorf("password must be at least 6 characters long")
 	}
 	return nil
 }

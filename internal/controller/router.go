@@ -53,6 +53,7 @@ func Setup(app pkg.Application, router *gin.Engine) {
 		categoriesRouter.GET("/:id", categoryController.GetByID)
 	}
 
+	
 	router.Use(middleware.JWTAuth(env.AccessTokenSecret))
 
 	userRouter := router.Group("/user")

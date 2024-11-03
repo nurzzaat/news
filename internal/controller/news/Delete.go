@@ -17,14 +17,6 @@ import (
 // @Router		/news/{id} [delete]
 func (nc *NewsController) Delete(c *gin.Context) {
 	newsID, _ := strconv.Atoi(c.Param("id"))
-	roleID := c.GetUint("roleID")
-
-	if roleID != models.ADMIN {
-		c.JSON(http.StatusBadRequest, models.ErrorResponse{
-			Result: "У вас нет прав для выполнения этой операции",
-		})
-		return
-	}
 
 	news, _ := nc.NewsRepository.GetByID(c, newsID)
 	_ = os.Remove(news.ThumbNail)

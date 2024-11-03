@@ -14,7 +14,7 @@ type CategoryRequest struct {
 }
 
 type CategoryRepository interface {
-	Create(c context.Context, category CategoryRequest) (int, error)
+	Create(c context.Context, category CategoryRequest, userID uint) (int, error)
 	Edit(c context.Context, category CategoryRequest) error
 	Delete(c context.Context, categoryID int) error
 	GetAll(c context.Context) ([]CategoryResponse, error)

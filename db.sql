@@ -25,7 +25,17 @@ create table
         author_id integer references users (id) on delete cascade on update cascade
     );
 
-    alter table users 
-    add column role_id integer default 2;
+alter table users
+add column role_id integer default 2;
 
-    INSERT INTO users (name, password, role_id) VALUES ('admin', '$2a$10$DMphGc0NQ1MJZCD6tyNeBOOrpP6REzj/t.iCwr9HCNwbZ4TN7xE8S', 1); 
+INSERT INTO
+    users (name, password, role_id)
+VALUES
+    (
+        'admin@admin.com',
+        '$2a$10$DMphGc0NQ1MJZCD6tyNeBOOrpP6REzj/t.iCwr9HCNwbZ4TN7xE8S',
+        1
+    );
+
+alter table category
+add column author_id integer default 0;

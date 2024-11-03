@@ -18,15 +18,8 @@ type CategoryController struct {
 // @Failure	default	{object}	models.ErrorResponse
 // @Router		/category [post]
 func (nc *CategoryController) Create(c *gin.Context) {
-	roleID := c.GetUint("roleID")
-
-	if roleID != models.ADMIN {
-		c.JSON(http.StatusBadRequest, models.ErrorResponse{
-			Result: "У вас нет прав для выполнения этой операции",
-		})
-		return
-	}
-
+	userID := c.GetUint("userID")
+	
 	category := models.CategoryRequest{}
 	if err := c.ShouldBind(&category); err != nil {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
@@ -34,7 +27,7 @@ func (nc *CategoryController) Create(c *gin.Context) {
 		})
 		return
 	}
-	id, err := nc.CategoryRepository.Create(c, category)
+	id, err := nc.CategoryRepository.Create(c, category, userID)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, models.ErrorResponse{
 			Result: "Не удалось создать категорию",
