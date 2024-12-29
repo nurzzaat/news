@@ -27,14 +27,14 @@ func (r *CategoryRepository) Create(c context.Context, category models.CategoryR
 }
 func (r *CategoryRepository) Edit(c context.Context, category models.CategoryRequest) error {
 	query := `UPDATE category SET name = $1 WHERE id = $2  and author_id != $2;`
-	if _, err := r.db.Exec(c, query, category.Name, category.ID); err != nil {
+	if _, err := r.db.Exec(c, query, category.Name, models.ADMIN_ID); err != nil {
 		return err
 	}
 	return nil
 }
 func (r *CategoryRepository) Delete(c context.Context, categoryID int) error {
 	query := `DELETE FROM category WHERE id = $1 and author_id != $2;`
-	if _, err := r.db.Exec(c, query, categoryID, models.ADMIN); err != nil {
+	if _, err := r.db.Exec(c, query, categoryID, models.ADMIN_ID); err != nil {
 		return err
 	}
 	return nil

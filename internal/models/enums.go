@@ -1,8 +1,9 @@
 package models
 
 const (
-	ADMIN = 1
-	USER  = 2
+	ADMIN_ID   = 2
+	ADMIN_ROLE = 1
+	USER_ROLE  = 2
 )
 
 const (
