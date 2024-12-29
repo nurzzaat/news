@@ -34,7 +34,7 @@ func (r *CategoryRepository) Edit(c context.Context, category models.CategoryReq
 }
 func (r *CategoryRepository) Delete(c context.Context, categoryID int) error {
 	query := `DELETE FROM category WHERE id = $1 and author_id != $2;`
-	if _, err := r.db.Exec(c, query, categoryID); err != nil {
+	if _, err := r.db.Exec(c, query, categoryID, models.ADMIN); err != nil {
 		return err
 	}
 	return nil
